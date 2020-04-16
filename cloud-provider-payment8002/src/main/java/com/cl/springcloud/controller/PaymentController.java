@@ -22,6 +22,7 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping(value = "/payment/create")     //应该用put更合理
+//    @PutMapping(value = "/payment/create")
     public CommonResult<Integer> create(@RequestBody Payment payment){
         int result = paymentService.create(payment);
         logger.info("create接收到数据"+payment);
@@ -46,7 +47,7 @@ public class PaymentController {
 
     @GetMapping("test")
     public String test(){
-        return "test8001";
+        return "test8002";
     }
 
 }

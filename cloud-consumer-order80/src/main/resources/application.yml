@@ -1,5 +1,13 @@
-server:
-  port: 8000
 spring:
   application:
-    name: cloud-consumer-order80
+    name: cloud-consumer-order
+server:
+  port: 8000
+
+# 微服务客户端配置
+eureka:
+  instance:
+    prefer-ip-address: true # 注册服务时使用服务ip地址
+  client:
+    service-url:
+      defaultZone: http://eureka-server7001:7001/eureka,http://eureka-server7002:7002/eureka
