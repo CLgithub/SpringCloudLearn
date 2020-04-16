@@ -22,8 +22,13 @@ eureka:
   instance:
     # 注册服务时使用服务ip地址
     prefer-ip-address: true
+    # 向注册中心发送心跳的周期，单位s
+    lease-renewal-interval-in-seconds: 30
+    # eureka 服务端在收到最后一次心跳后等待的时间上限，单位s，超时被除移
+    lease-expiration-duration-in-seconds: 90
 #    instance-id: cloud-provider-payment8001
   client:
     service-url:
-      defaultZone: http://eureka-server7001:7001/eureka,http://eureka-server7002:7002/eureka
+      defaultZone: http://eureka-server7001:7001/eureka
+
 

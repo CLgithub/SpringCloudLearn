@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @Author l
  * @Date 2020/4/13 22:41
+ *
+ * 付款微服务8002
  */
 @SpringBootApplication
 //@EnableEurekaClient
