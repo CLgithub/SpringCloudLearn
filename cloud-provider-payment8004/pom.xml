@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud-consumer-order80</artifactId>
-
+    <artifactId>cloud-provider-payment8004</artifactId>
 
     <dependencies>
         <!--自定义公共jar-->
@@ -20,10 +19,10 @@
             <version>${project.version}</version>
         </dependency>
         <!--eureka client-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+        <!--</dependency>-->
         <!--web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -44,11 +43,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.projectlombok</groupId>-->
-        <!--<artifactId>lombok</artifactId>-->
-        <!--</dependency>-->
+        <!--zookeeper-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+        </dependency>
 
     </dependencies>
-    
+
 </project>

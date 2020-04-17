@@ -28,7 +28,7 @@ public class OrderController {
     RestTemplate myRestTemplate;
 
 
-    public final static String URL1="http://CLOUD-PROVIDER-PAYMENT";
+    public final static String URL1="http://cloud-provider-payment";
 
     @GetMapping("/payment/create")
     public CommonResult create(Payment payment){
