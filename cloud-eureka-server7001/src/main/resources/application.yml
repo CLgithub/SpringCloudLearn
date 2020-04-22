@@ -15,6 +15,6 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     # 关闭服务保护机制
-    enable-self-preservation: false
+    enable-self-preservation: true
     # 设置服务保护机制时间为2000ms
     eviction-interval-timer-in-ms: 2000
