@@ -10,17 +10,18 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>cloud-provider-payment8001</module>
-        <module>cloud-consumer-order80</module>
+        <module>cloud-consumer-eureka-order1100</module>
         <module>cloud-api-commons</module>
         <module>cloud-eureka-server7001</module>
         <module>cloud-eureka-server7002</module>
-        <module>cloud-provider-payment8002</module>
-        <module>cloud-provider-payment8004</module>
-        <module>cloud-consumerzk-order80</module>
-        <module>cloud-provider-payment8006</module>
-        <module>cloud-consumerconsul-order80</module>
-        <module>cloud-provider-payment18006</module>
+        <module>cloud-provider-eureka-payment1101</module>
+        <module>cloud-provider-eureka-payment1102</module>
+        <module>cloud-provider-zk-payment1201</module>
+        <module>cloud-consumer-zk-order1200</module>
+        <module>cloud-provider-consul-payment1301</module>
+        <module>cloud-consumer-consul-order1300</module>
+        <module>cloud-provider-consul-payment1302</module>
+        <module>cloud-consumer-consul-feign-order1400</module>
     </modules>
 
 

@@ -7,7 +7,7 @@ eureka:
   instance:
     hostname: eureka-server7002         # eureka实例主机名
   client:
-    register-with-eureka: false      # 是否把自己注册到eureka中
+    register-with-eureka: true      # 是否把自己注册到eureka中
     fetch-registry: false            # 是否从eureka 上获取服务的注册信息
     service-url:
       defaultZone: http://eureka-server7001:7001/eureka
