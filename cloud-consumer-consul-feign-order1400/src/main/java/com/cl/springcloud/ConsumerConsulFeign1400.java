@@ -10,7 +10,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Date 2020/5/13 15:25
  */
 @SpringBootApplication
-@EnableDiscoveryClient
 @EnableFeignClients     // 使用该注解启用openFeign
 public class ConsumerConsulFeign1400 {
     public static void main(String[] args) {

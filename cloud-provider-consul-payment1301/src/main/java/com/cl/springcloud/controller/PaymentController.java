@@ -3,11 +3,11 @@ package com.cl.springcloud.controller;
 import com.cl.springcloud.entities.Payment;
 import com.cl.springcloud.service.PaymentService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author l
@@ -21,7 +21,24 @@ public class PaymentController {
 
     @GetMapping("/getport")
     public String getPort() {
+//        try {
+//            System.out.println("延时。。。");
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return serverPort;
+    }
+
+    @GetMapping("/timoutTest/{ms}")
+    public String timoutTest(@PathVariable("ms")int ms){
+        // 暂停3秒
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "执行完成1";
     }
 
 
@@ -32,4 +49,6 @@ public class PaymentController {
     public Payment getOnePayment(){
         return paymentService.getOnePayment();
     }
+
+
 }

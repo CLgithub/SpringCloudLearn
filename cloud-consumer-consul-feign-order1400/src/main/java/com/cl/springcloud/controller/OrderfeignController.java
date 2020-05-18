@@ -3,10 +3,12 @@ package com.cl.springcloud.controller;
 import com.cl.springcloud.entities.Payment;
 import com.cl.springcloud.service.PaymentFeignService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 
 /**
  * @Author l
@@ -18,9 +20,13 @@ public class OrderfeignController {
     @Resource
     private PaymentFeignService paymentFeignService;
 
-    @RequestMapping("/getpaymentport4")
+    @RequestMapping("/getport")
     public String getPort(){
-//        return "1";
         return paymentFeignService.getPort();
+    }
+
+    @RequestMapping("/timoutTest/{ms}")
+    public String tot(@PathVariable("ms")int ms){
+        return paymentFeignService.timoutTest(ms);
     }
 }
