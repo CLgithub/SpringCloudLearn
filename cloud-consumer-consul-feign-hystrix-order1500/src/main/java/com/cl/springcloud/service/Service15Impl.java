@@ -20,7 +20,9 @@ public class Service15Impl implements Service15{
     }
 
     @Override
-    public String getPort3() {
+    public String getPort3(Integer id) {
         return "调用端--Service15Impl_getPort2_异常处理";
     }
+
+
 }

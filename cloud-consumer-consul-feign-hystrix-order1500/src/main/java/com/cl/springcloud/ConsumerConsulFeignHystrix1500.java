@@ -12,7 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableFeignClients     // 使用该注解启用openFeign
-@EnableHystrix          // 启用Hystrix
+@EnableHystrix          // 启用Hystrix，服务降级
 public class ConsumerConsulFeignHystrix1500 {
     public static void main(String[] args) {
         SpringApplication.run(ConsumerConsulFeignHystrix1500.class, args);

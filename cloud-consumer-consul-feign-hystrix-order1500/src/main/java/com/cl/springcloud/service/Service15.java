@@ -2,7 +2,10 @@ package com.cl.springcloud.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.websocket.server.PathParam;
 
 /**
  * @Author l
@@ -18,6 +21,6 @@ public interface Service15 {
     @RequestMapping("/getPort2")
     String getPort2();
 
-    @RequestMapping("/getPort3")
-    String getPort3();
+    @RequestMapping("/getPort3/{id}")
+    String getPort3(@PathVariable("id") Integer id);
 }

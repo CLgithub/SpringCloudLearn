@@ -90,21 +90,23 @@
 logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 		```
 		
-## <center>服务降级</center>
+## <center>服务降级与熔断</center>
 
-* 服务降级的作用，避免因服务调用串中某个服务单点失败而导致整个系统奔溃，所有需要一种链路中段的方案进行服务降级
+* 作用，避免因服务调用串中某个服务异常而导致整个系统等待，进而发生雪崩
+
+**重要概念**
+
+* 服务降级 当服务器压力剧增的情况下，根据当前业务情况及流量**对一些服务和页面有策略的降级**，以此释放服务器资源以保证核心任务的正常运行
+* 服务熔断 如果某个目标服务调用慢或者有大量超时，此时，**熔断该服务的调用**，对于后续调用请求，不在继续调用目标服务，直接返回，快速释放资源。如果目标服务情况好转则恢复调用
+* 服务限流 flowlimit 高并发时，只允许特定数量的请求访问
+
 
 ### 1、Hystrix⚠️
 * Hystrix是一个开源库，用于处理分布式系统的**延时**和**容错**
 * 断路器熔断器，调用某个服务出故障时，向调用方返回一个符合预期的可处理的备选响应(FallBack)，而不是长时间的等待货抛出调用方无法处理的异常
 
-	**重要概念**
 
-	* 服务降级 fallback 退路，某服务不可用了，需要给一个退路
-	* 服务熔断 break 保险丝 在服务出现异常后，进行降级->把服务熔断掉->逐步恢复
-	* 服务限流 flowlimit 高并发时，只允许特定数量的请求访问
-
-**Hystrix 使用**
+**Hystrix 使用-服务降级**
 
 * **调用端，配合openFeign**
 
@@ -167,9 +169,37 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
             }
     ) //若该方法故障，用哪个方法catch
 	```
-
 	
+**Hystrix 使用-服务熔断**
 
+```
+	 /**
+     * 超时，指定异常处理
+     * 服务熔断，在服务降级的基础上，添加降级条件和恢复条件
+     * @return
+     */
+    @RequestMapping("/getPort3/{id}")
+    @HystrixCommand(
+            fallbackMethod = "getPort3_fallbackMethod",
+            commandProperties = {
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "100"),
+                    @HystrixProperty(name = "circuitBreaker.enabled", value = "true"),    //启用熔断功能
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),    // 检查的请求次数
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),    // 时间窗口
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60"),    // 失败率达到多少后熔断掉
+            }
+    ) //若该方法故障，用哪个方法catch
+    public String getPort3(@PathVariable("id") Integer id){
+        if(id<0){
+            throw new RuntimeException("不能为负数");
+        }
+
+        return "被调用端--3:"+serverPort + "，线程:" + Thread.currentThread().getName()+", id:"+id;
+    }
+```
+![](./images/5.png)
+
+服务降级是预备方案，熔断是有预备方案后设定条件恢复，三种状态
 
 
 ### 2、Resilience4j✅
