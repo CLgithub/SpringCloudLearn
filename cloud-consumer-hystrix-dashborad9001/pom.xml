@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud-consumer-consul-feign-hystrix-order1500</artifactId>
+    <artifactId>cloud-consumer-hystrix-dashborad9001</artifactId>
 
     <dependencies>
         <!--自定义公共jar-->
@@ -48,6 +48,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!--hystrix 可视化-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
         </dependency>
         <!--openFeign-->
         <dependency>

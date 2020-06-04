@@ -24,6 +24,7 @@
         <module>cloud-consumer-consul-feign-order1400</module>
         <module>cloud-provider-consul-hystrix-payment1501</module>
         <module>cloud-consumer-consul-feign-hystrix-order1500</module>
+        <module>cloud-consumer-hystrix-dashborad9001</module>
     </modules>
 
 

@@ -201,6 +201,53 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 
 服务降级是预备方案，熔断是有预备方案后设定条件恢复，三种状态
 
+**HystrixDashBorad 服务监控图表📈**
+
+* pom.xml
+
+	```
+	<!--hystrix 可视化-->
+	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+	</dependency>
+	```
+* 主启动类
+
+	```
+	@EnableHystrixDashboard  // 启用EnableHystrix仪表盘功能
+	```
+	
+	
+* 被监控的服务添加如下配置
+
+	```
+	 /**
+     * 此配置是为了服务监控而配置，与服务本身无关，
+     * servletRegistationBean因为springboot的默认路径不是"/hystrix.stream"
+     * 只能自己配置
+     * @return
+     */
+    @Bean
+    public ServletRegistrationBean getServlet(){
+        HystrixMetricsStreamServlet hystrixMetricsStreamServlet=new HystrixMetricsStreamServlet();
+        ServletRegistrationBean servletRegistrationBean=new ServletRegistrationBean(hystrixMetricsStreamServlet);
+        servletRegistrationBean.setLoadOnStartup(1);
+        servletRegistrationBean.addUrlMappings("/hystrix.stream");
+        servletRegistrationBean.setName("HystrixMetricsStreamServlet");
+        return servletRegistrationBean;
+    }
+	```
+* 访问地址
+	
+	```
+	http://localhost:9001/hystrix
+	填入http://localhost:1501/hystrix.stream
+	```
+* 图表说明
+
+	![](./images/6.png)
+
 
 ### 2、Resilience4j✅
 ### 3、Sentinel✅
