@@ -272,7 +272,7 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 ### 3、Gateway✅
 例[cloud-gateway-gateway9500](./cloud-gateway-gateway9500)
 
-网关路由配置
+#### 网关路由
 
 * 配置文件
 	1. pom.xml
@@ -302,24 +302,27 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 
 	[配置Bean](./cloud-gateway-gateway9500/src/main/java/com/cl/sprigncloud/config/GateWayConfig.java)
 	
-查看启动日志
-
+* 查看启动日志
 	
-```
-Loaded RoutePredicateFactory [After] # 匹配在某时间之后
-Loaded RoutePredicateFactory [Before] # 匹配在某时间之前
-Loaded RoutePredicateFactory [Between] # 匹配在某时间之间，两个时间中间用,隔开
-Loaded RoutePredicateFactory [Cookie] # 匹配Cookie
-Loaded RoutePredicateFactory [Header] # 匹配请求头信息
-Loaded RoutePredicateFactory [Host] # 匹配host
-Loaded RoutePredicateFactory [Method] # 匹配请求方法
-Loaded RoutePredicateFactory [Path] # 匹配请求路径
-Loaded RoutePredicateFactory [Query] # 
-Loaded RoutePredicateFactory [ReadBodyPredicateFactory]
-Loaded RoutePredicateFactory [RemoteAddr]
-Loaded RoutePredicateFactory [Weight]
-Loaded RoutePredicateFactory [CloudFoundryRouteService]
-```
+		
+	```
+	Loaded RoutePredicateFactory [After] # 匹配在某时间之后
+	Loaded RoutePredicateFactory [Before] # 匹配在某时间之前
+	Loaded RoutePredicateFactory [Between] # 匹配在某时间之间，两个时间中间用,隔开
+	Loaded RoutePredicateFactory [Cookie] # 匹配Cookie
+	Loaded RoutePredicateFactory [Header] # 匹配请求头信息
+	Loaded RoutePredicateFactory [Host] # 匹配host
+	Loaded RoutePredicateFactory [Method] # 匹配请求方法
+	Loaded RoutePredicateFactory [Path] # 匹配请求路径
+	Loaded RoutePredicateFactory [Query] # 
+	Loaded RoutePredicateFactory [ReadBodyPredicateFactory]
+	Loaded RoutePredicateFactory [RemoteAddr]
+	Loaded RoutePredicateFactory [Weight]
+	Loaded RoutePredicateFactory [CloudFoundryRouteService]
+	```
+
+[过滤器](./cloud-gateway-gateway9500/src/main/java/com/cl/sprigncloud/filter/MyLogGateWayFilter.java)
+
 
 ## <center>服务配置</center>
 
