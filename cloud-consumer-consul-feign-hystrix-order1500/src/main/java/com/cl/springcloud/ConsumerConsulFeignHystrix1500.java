@@ -10,6 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 /**
+ * 1 服务降级、熔断
  * @Author l
  * @Date 2020/5/20 17:32
  */

@@ -6,6 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
+ * 1 openFeign
+ * 2 服务网关负载均衡测试
  * @Author l
  * @Date 2020/5/13 15:25
  */

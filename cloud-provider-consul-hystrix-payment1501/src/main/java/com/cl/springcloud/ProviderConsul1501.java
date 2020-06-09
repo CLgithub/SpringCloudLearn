@@ -9,6 +9,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
 /**
+ * 1. 服务降级 熔断
+ * 2. 仪表盘监控
  * @Author l
  * @Date 2020/5/20 10:50
  */

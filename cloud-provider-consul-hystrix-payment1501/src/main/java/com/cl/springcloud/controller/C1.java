@@ -79,4 +79,13 @@ public class C1 {
         return "被调用端-全局fallack";
     }
 
+
+    /**
+     * 正常访问，用于网关测试
+     * @return
+     */
+    @RequestMapping("/getPort4")
+    public String getPort4() {
+         return serverPort;
+    }
 }

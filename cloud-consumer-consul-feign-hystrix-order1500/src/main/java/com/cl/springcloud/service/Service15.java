@@ -23,4 +23,7 @@ public interface Service15 {
 
     @RequestMapping("/getPort3/{id}")
     String getPort3(@PathVariable("id") Integer id);
+
+    @RequestMapping("/getPort4")
+    String getPort4();
 }

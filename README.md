@@ -11,7 +11,9 @@
 ![](./images/3.png)
 
 ### 2、openFeign✅
-* 与feign的区别
+例[cloud-consumer-consul-feign-order1400](./cloud-consumer-consul-feign-order1400/)
+
+* feign的区别
 ![](./images/4.png)
 
 	#### openFeign使用
@@ -110,6 +112,8 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 
 * **调用端，配合openFeign**
 
+	例[cloud-consumer-consul-feign-hystrix-order1500](./cloud-consumer-consul-feign-hystrix-order1500)
+
 	1、application.properties 文件
 	
 	```
@@ -140,6 +144,8 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 	```
 	
 * **用于被调用端**
+
+	例[cloud-provider-consul-hystrix-payment1501](./cloud-provider-consul-hystrix-payment1501)
 
 	1、主启动类，添加注解
 	
@@ -172,6 +178,8 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 	
 **Hystrix 使用-服务熔断**
 
+例[cloud-provider-consul-hystrix-payment1501](./cloud-provider-consul-hystrix-payment1501)
+
 ```
 	 /**
      * 超时，指定异常处理
@@ -202,6 +210,8 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 服务降级是预备方案，熔断是有预备方案后设定条件恢复，三种状态
 
 **HystrixDashBorad 服务监控图表📈**
+
+例[cloud-consumer-hystrix-dashborad9001](./cloud-consumer-hystrix-dashborad9001)
 
 * pom.xml
 
@@ -254,11 +264,43 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 
 
 ## <center>服务网关</center>
+作用：路由管理工具，能实现反向代理、鉴权、流量控制、熔断、日志监控等功能
+![](./images/7.png)
 
 ### 1、Zuul❌
 ### 2、Zuul2⚠️
-### 2、Gateway✅
+### 3、Gateway✅
+例[cloud-gateway-gateway9500](./cloud-gateway-gateway9500)
 
+网关路由配置
+
+* 配置文件
+	1. pom.xml
+		
+		```
+		 <!-- 引入 服务网关 gateway-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        
+        <!--gateway需要去除web模块-->
+        ...
+        ```
+	2. 配置文件
+
+		```
+		# 开启从注册中心动态创建路由功能，利用微服务名进行路由
+		spring.cloud.gateway.discovery.locator.enabled=true
+		# 网关配置
+		# 访问http://localhost:9500/getport
+		spring.cloud.gateway.routes[1].id=r1_1502
+		spring.cloud.gateway.routes[1].uri=lb://cloud-provider-consul-payment
+		spring.cloud.gateway.routes[1].predicates[0] = Path=/getp**
+		```
+* 配置Bean
+
+	[配置Bean](./cloud-gateway-gateway9500/src/main/java/com/cl/sprigncloud/config/GateWayConfig.java)
 
 ## <center>服务配置</center>
 

@@ -38,6 +38,12 @@ public class C1 {
         return service15.getPort3(id);
     }
 
+    @RequestMapping("/getPort4")
+    public String getPort4(){
+        return service15.getPort4();
+    }
+
+
 
 
 

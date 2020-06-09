@@ -24,5 +24,10 @@ public class Service15Impl implements Service15{
         return "调用端--Service15Impl_getPort2_异常处理";
     }
 
+    @Override
+    public String getPort4() {
+        return "调用端--服务降级";
+    }
+
 
 }
