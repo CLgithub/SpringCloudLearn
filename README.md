@@ -327,6 +327,109 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 ## <center>服务配置</center>
 
 ### 1、Config❌
+为各个不同的微服务应用提供一个中心化的外部配置
+![](./images/8.png)
+
+* **配置中心config同步github**
+
+	1.pmo.xml
+	
+	```
+	<!-- config -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-config-server</artifactId>
+	</dependency>
+	```
+	
+	2.application.properties
+	
+	```
+	# 配置从github上获取配置
+	# 配置仓库地址
+	spring.cloud.config.server.git.uri=git@github.com:CLgithub/springcloud-config.git
+	# 配置仓库
+	spring.cloud.config.server.git.search-paths[0]=springcloud-config
+	# 配置获取那个标签
+	spring.cloud.config.label=master
+	```
+	
+	3.主启动类
+	
+	```
+	@EnableConfigServer #启用config服务
+	```
+	
+	4.测试
+	
+	```
+	http://localhost:3344/master/application-profile.yml
+	```
+	
+	5.配置读取规则，配置文件命名需要{application}-{profile}.properties
+	
+	```
+	/{label}/{application}-{profile}.yml	
+	例：http://localhost:3344/master/application-profile.yml
+	/{application}-{profile}.yml
+	例：http://localhost:3344/application-profile.properties
+	/{application}/{profile}/{label}
+	例：http://localhost:3344/application/profile/master
+	```
+* **其它服务读取配置中心统一配置**
+	
+	1.pom.xml
+	
+	```
+	<!-- config client -->
+   <dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-config</artifactId>
+   </dependency>
+	```
+	2.bootstrap.yml
+	
+	```
+	# 配置从哪获取config
+	spring.cloud.config.label=master
+	spring.cloud.config.name=application
+	spring.cloud.config.profile=profile
+	spring.cloud.config.uri=http://localhost:3344
+	
+	# 暴露监控端点，用于时时刷新
+	management.endpoints.web.exposure.include=*
+	```
+	
+	3.业务类，获取配置信息并显示
+	
+	```
+	@RestController
+	@RefreshScope       // 动态刷新
+	public class ConfigClientController {
+		@Value("${c1.c2}")  //配置文件中的配置项目
+		private String configInfo;
+		@RequestMapping("/configInfo")
+		public String getConfigInfo(){
+			return configInfo;
+		}
+	}
+	```
+	4.测试
+	
+	```
+	http://localhost:3355/configInfo 		# 显示3355从配置中心3344获取到的配置信息
+	# github中配置文件修改后，3344自动获取，3355需要发送post请求到
+	curl -X POST "http://localhost:3355/actuator/refresh" # 刷新配置，才生效
+	```
+	
+* **bootstrap.yml 配置文件**
+
+	* application.yml 用户级
+	* bootstrap.yml 系统级 优先级**最高**
+
+
+	
+
 ### 2、Nacos✅
 
 
