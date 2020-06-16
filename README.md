@@ -420,6 +420,7 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 	http://localhost:3355/configInfo 		# 显示3355从配置中心3344获取到的配置信息
 	# github中配置文件修改后，3344自动获取，3355需要发送post请求到
 	curl -X POST "http://localhost:3355/actuator/refresh" # 刷新配置，才生效
+	配合bus实现时时自动更新，其实就是用消息中间件post
 	```
 	
 * **bootstrap.yml 配置文件**
@@ -428,12 +429,111 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 	* bootstrap.yml 系统级 优先级**最高**
 
 
-	
-
 ### 2、Nacos✅
 
 
 ## <center>服务总线</center>
 
 ### 1、Bus❌
+![](./images/9.png)
+
+![](./images/10.png)
+
+* spring cloud bus能管理和传播分布式系统间的消息，就像一个分布式执行器，可用于广播状态更改、事件推送等，也可以当作微服务间的通信通道
+
+
+* **什么是总线bus**
+	* 在微服务架构的系统中，通常会使用轻量级的消息代理来构建一个共用的消息主题，并让系统中所有微服务实例都连接上来，由于该主题产生的消息会被所有实例监听和消费，所以称它为消息总线。
+	* 在总线上的各个实例，都可以方便地广播一些，需要让其它实例知道的消息
+
+* **基本原理**
+	* ConfigClient实例都监听MQ中同一个topic(默认是springCloudBus)，当一个服务刷新数据的时候，它会把这个消息放入到Topic中，这样其它监听同一Topic的服务就能得到通知，然后去更新自身的配置
+	* 配置中心启动后，会在rabbitMQ中建立一个Exchange: springCloudBus，每一个服务会有一个对应的Queues绑定到这个交换器
+
+* **利用bus总线，通知客户端更新配置**
+	* 配置中心
+		* pom.xml
+		
+		```
+		<!-- config server -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+		<!--消息总线bus，rabbitmq-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
+       ```
+		* application.properties
+
+		```
+		# bus rabbitmq配置
+		spring.rabbitmq.host=localhost
+		spring.rabbitmq.port=5672
+		spring.rabbitmq.username=guest
+		spring.rabbitmq.password=guest
+		# 暴露bus刷新配置端点
+		management.endpoints.web.exposure.include=bus-refresh
+		```
+	* 客户端
+		* pmo.xml
+		
+		```
+		<!-- config client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<!--消息总线bus，rabbitmq-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
+       ```
+       * bootstrap.properties 只能用这个名字，表明是从配置中心读取过来的配置
+       
+       ```
+		# bus 消息总线 rabbitmq配置
+		spring.rabbitmq.host=localhost
+		spring.rabbitmq.port=5672
+		spring.rabbitmq.username=guest
+		spring.rabbitmq.password=guest
+		
+		# 暴露监控端点
+		management.endpoints.web.exposure.include=*
+       ```
+       
+	* github上更新后，向配置中心发送POST请求，通知全部或部分客户端更新
+	
+	```
+	curl -X POST "http://localhost:3344/actuator/bus-refresh"
+	curl -X POST "http://localhost:3344/actuator/bus-refresh/cloud-config-client-3366:3366"
+	```
+       
+#### stream
+* 统一各种消息中间件的操作，相对于JDBC
+* 最关键的就是绑定器Binder，作为中间层
+	
+	![](./images/11.png)
+	![](./images/12.png)
+	
+* 主题广播📢
+	* RabbitMQ中就是Exchange
+	* Kafka中就是Topic
+
+* Stream标准
+	* Binder 中间层，屏蔽差异
+	* Channel 通道，是队列Queue的一种抽象
+	* Source和Sink 相对于Stream自身而言的输入Source和输出Sink
+
+* 基本组件
+	* Middeware 中间件，目前只支持RabbitMQ和Kafka
+	* Binder 绑定器，kafka--topic，RabbitMQ--exchange
+	* @Input 注解标识输入通道
+	* @Output 注解标识输出通道
+	* @StreamListener 注解标识Stream监听器
+	* @EnableBinding 注解启用绑定器，吧通道channel和exchange绑定在一起
+
 ### 2、Nacos✅
