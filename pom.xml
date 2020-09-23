@@ -30,6 +30,10 @@
         <module>cloud-config-client-3355</module>
         <module>cloud-config-client-3366</module>
         <module>cloud-stream-rabbitmq-provider1600</module>
+        <module>cloud-stream-rabbitmq-consumer1601</module>
+        <module>cloud-provider-rabbitmq-consumer1603</module>
+        <module>cloud-stream-rabbitmq-consumer1603</module>
+        <module>cloud-stream-rabbitmq-provider1603</module>
     </modules>
 
 

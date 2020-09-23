@@ -526,11 +526,12 @@ logging.level.com.cl.springcloud.service.PaymentFeignService:debug
 * Stream标准
 	* Binder 中间层，屏蔽差异
 	* Channel 通道，是队列Queue的一种抽象
-	* Source和Sink 相对于Stream自身而言的输入Source和输出Sink
+	* Source 消息源
+	* Sink	消息目的地
 
 * 基本组件
 	* Middeware 中间件，目前只支持RabbitMQ和Kafka
-	* Binder 绑定器，kafka--topic，RabbitMQ--exchange
+	* Binder 绑定器，kafka--topic，RabbitMQ- -exchange
 	* @Input 注解标识输入通道
 	* @Output 注解标识输出通道
 	* @StreamListener 注解标识Stream监听器
